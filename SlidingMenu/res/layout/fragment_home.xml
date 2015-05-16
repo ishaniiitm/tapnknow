@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+  
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:fillViewport="true">
+
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="#ffffff" >
+
+      <!-- Header  Starts -->
+
+      
+      <!-- Header Ends -->
+      <!-- Footer Start -->
+      <!-- Footer Ends -->
+
+
+      <!-- Login Form -->
+
+      <LinearLayout
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/linearLayout1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/header"
+          android:orientation="vertical"
+          android:padding="10dip" >
+
+          <!-- Email Label -->
+<LinearLayout android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/camera" 
+        android:gravity="bottom"
+        android:layout_marginTop="5dp"
+        android:onClick="Camera"
+       />
+    
+          <TextView
+              android:id="@+id/textView2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="20dip"
+              android:layout_marginTop="5dip"
+              android:ems="10"
+              android:fontFamily="Arial"
+              android:gravity= "center_horizontal"
+              android:paddingTop="20dp"
+              android:singleLine="true"
+              android:text="Please Tap on Hotspot or Scan QR Code for Information"
+              android:textColor="@color/textC"
+              android:textSize="10dp" />
+
+               </LinearLayout>
+          <LinearLayout android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:orientation="horizontal">
+
+          <EditText
+              android:id="@+id/editText1"
+              android:layout_width="250dip"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="20dip"
+              android:layout_marginTop="2dip"
+              android:fontFamily="Arial"
+              android:hint="You can also enter ID for information"
+              android:singleLine="true"
+              android:textColor="@color/textC"
+              android:textSize="10dp" />
+
+          <Button
+              android:id="@+id/pbutton2"
+              android:layout_width="34dp"
+              android:layout_height="24dp"
+              android:background="@drawable/gradiant"
+              android:gravity="bottom"
+              android:onClick="navigate"
+              android:text="Go"
+              android:textColor="#FFFFFF" >
+</Button>"
+
+</LinearLayout>
+       
+        <ImageView
+          android:id="@+id/imageView1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/linearLayout1"
+          android:layout_centerHorizontal="true"
+          android:scaleType="centerCrop"
+          android:paddingTop="0dp"
+          
+          android:src="@drawable/d"
+          android:onClick="go" />
+
+      </LinearLayout>
+          
+        
+          
+          
+          <!-- Login button -->
+          <!-- Link to Registration Screen -->
+        
+      <!-- Login Form Ends -->
+
+      <LinearLayout android:id="@+id/footer"
+  				android:layout_width="fill_parent"
+  				android:layout_height="40dip"
+  				android:background="@drawable/gradiant"
+  				android:layout_alignParentBottom="true"
+  				>
+
+          <TextView
+              android:id="@+id/textView1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="10dip"
+              android:paddingLeft="30dip"
+              android:text="Space Reserve For Sponsor"
+               android:textColor="#FFFFFF"
+                android:textSize="20dp"
+              android:fontFamily="Arial" />
+
+  		</LinearLayout>
+  </RelativeLayout>
+  
+  
+		</ScrollView>
+  		
+ 
+
