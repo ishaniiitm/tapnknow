@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
 	public HomeFragment(){}
 	
 	
-	ImageView  img;
+	ImageView  img,img_asi;
 	ImageButton img2;
 	Fragment fragment,fragment2;
 	Button b;
@@ -38,8 +38,11 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         
         img=(ImageView) rootView.findViewById(R.id.imageView1);
-        img2=(ImageButton) rootView.findViewById(R.id.imageButton1);
-        b=(Button) rootView.findViewById(R.id.pbutton2);
+        img_asi=(ImageView) rootView.findViewById(R.id.img_Asi);
+        
+        
+       // img2=(ImageButton) rootView.findViewById(R.id.imageButton1);
+        b=(Button) rootView.findViewById(R.id.btn_play);
         editText = (EditText) rootView.findViewById(R.id.editText1);
         
         b.setOnClickListener(new OnClickListener() {
@@ -84,14 +87,22 @@ public class HomeFragment extends Fragment {
         
         
         
-        img2.setOnClickListener(new View.OnClickListener() {
+        img_asi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-            	Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);	
-            	startActivity(i);
-              
-            }
+public void onClick(View v) {
+            	
+            	fragment =new PhotosFragment();
+        		final GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
+        		
+           	 globalVariable.setMonument_ID(4);
+           	 
+        		FragmentManager fragmentManager = getFragmentManager();
+        		fragmentManager.beginTransaction()
+        				.replace(R.id.frame_container, fragment).addToBackStack("tag").commit();
+        	}
+            
         });
+       
         
         
         img.setOnClickListener(new View.OnClickListener() {

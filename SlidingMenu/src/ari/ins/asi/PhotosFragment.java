@@ -76,8 +76,8 @@ public class PhotosFragment extends Fragment {
 		monument_id =globalVariable.getMonument_ID();
         View rootView = inflater.inflate(R.layout.fragment_photos, container, false);
         
-        name=(TextView) rootView.findViewById(R.id.mname);
-        description=(TextView) rootView.findViewById(R.id.description);
+      //  name=(TextView) rootView.findViewById(R.id.mname);
+        description=(TextView) rootView.findViewById(R.id.txt_name);
         
       
         db =getActivity().openOrCreateDatabase("Tapnknow",1, null);
@@ -163,7 +163,7 @@ public class PhotosFragment extends Fragment {
 		String Titile = cursor.getString(cursor.getColumnIndex("Brief")).toString();
 		
 	String  Description = cursor.getString(cursor.getColumnIndex("Description")).toString();
-		name.setText(Titile);
+		//name.setText(Titile);
 		description.setText(Description);
 			
 			      

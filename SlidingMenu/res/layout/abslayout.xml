@@ -14,4 +14,16 @@
         android:id="@+id/mytext"
         android:textSize="18sp" 
         android:layout_marginLeft="80dp"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EN" 
+        
+        android:layout_marginLeft="90dp"
+           android:textSize="18sp" 
+           
+        android:background="@drawable/border"></TextView>"
+    
 </LinearLayout>

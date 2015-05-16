@@ -35,9 +35,11 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
 import android.widget.ListView;
@@ -45,7 +47,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ari.ins.asi.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity  {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -67,6 +69,8 @@ GlobalClass globalVariable;
 	private NavDrawerListAdapter adapter;
 	Fragment fragment;
 	
+	TextView  txt_lang ;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,21 @@ GlobalClass globalVariable;
 		
 		
 		
+		//  add  listner
+		
+		
+		LayoutInflater inflator = LayoutInflater.from(this);
+		View v = inflator.inflate(R.layout.abslayout, null);
+		
+		txt_lang  =(TextView) v.findViewById(R.id.textView1);
+		getActionBar().setCustomView(v);
+
+
+	
+		
 		fragment  =new HomeFragment();
+		
+	//txt_lang=	(TextView) getActionBar().getCustomView().findViewById(R.id.textView1);
 		
 	getActionBar().setBackgroundDrawable(new  ColorDrawable(Color.parseColor("#0A81F7")));
 		//getActionBar().setBackgroundDrawable(new  ColorDrawable(Color.parseColor(R.layout.header_gradient)));
@@ -148,7 +166,7 @@ GlobalClass globalVariable;
 				// adding nav drawer items to array
 				// Home
 				int i = 0;
-				for(i=0;i<10;i++)
+				for(i=0;i<5;i++)
 				{
 				navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
 				}
@@ -246,16 +264,16 @@ GlobalClass globalVariable;
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			//fragment = new FindPeopleFragment();
+			fragment = new AboutUs();
 			break;
 		case 2:
-			//fragment = new PhotosFragment();
+			fragment = new  AboutAsi();
 			break;
 		case 3:
 			//fragment = new CommunityFragment();
 			break;
 		case 4:
-			//fragment = new PagesFragment();
+			fragment = new Feeedback();
 			break;
 		case 5:
 			//fragment = new WhatsHotFragment();
@@ -470,4 +488,6 @@ GlobalClass globalVariable;
 	        String code =new String(payload); 
 	        return code;
 	    }
+
+		
 }

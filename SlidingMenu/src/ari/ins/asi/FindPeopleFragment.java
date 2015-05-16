@@ -28,9 +28,9 @@ public class FindPeopleFragment extends Fragment {
 public FindPeopleFragment(){}
 	
 	//Variable Declaration
-	TextView t, t1,t2,t4;
+	TextView txt_name,txt_brief,txt_Story,txt_arch,txt_myth;
 	TextToSpeech ttobj;
-	Button  b1,b2,b3;
+	Button  btn_story,btn_arch,btn_myth, btn_play,btn_stop ,btn_pause;
 	SQLiteDatabase db;
 	Cursor c;
 	String sqlQuery;
@@ -47,27 +47,37 @@ public FindPeopleFragment(){}
  //Variable Definition
         View rootView = inflater.inflate(R.layout.fragment_find_people, container, false);
         db  =getActivity().openOrCreateDatabase("Tapnknow", 1, null);
-        t1=(TextView) rootView.findViewById(R.id.droptext);
-        t2=(TextView) rootView.findViewById(R.id.droptext1);
-        t4=(TextView) rootView.findViewById(R.id.droptext2);
-        t=(TextView) rootView.findViewById(R.id.Heading);
-        b1=(Button) rootView.findViewById(R.id.button1);
-        b2=(Button) rootView.findViewById(R.id.button2);
-        b3=(Button) rootView.findViewById(R.id.button3);
         
-       RelativeLayout  rl =(RelativeLayout) rootView .findViewById(R.id.droppanel);
+        
+        txt_name= (TextView) rootView.findViewById(R.id.txt_name);
+        txt_brief =(TextView) rootView.findViewById(R.id.txt_Brief);
+        txt_Story=(TextView) rootView.findViewById(R.id.txt_story);
+       txt_arch=(TextView) rootView.findViewById(R.id.txt_arch);
+       txt_myth=(TextView) rootView.findViewById(R.id.txt_myth);
+      //  t=(TextView) rootView.findViewById(R.id.Heading);
+        btn_story=(Button) rootView.findViewById(R.id.btn_story);
+        btn_arch=(Button) rootView.findViewById(R.id.btn_arch);
+       btn_myth=(Button) rootView.findViewById(R.id.btn_myth);
+       
+       btn_play=(Button) rootView.findViewById(R.id.btn_play);
+       btn_pause=(Button) rootView.findViewById(R.id.btn_pause);
+       btn_stop =(Button) rootView.findViewById(R.id.btn_stop);
+        
+     /*  RelativeLayout  rl =(RelativeLayout) rootView .findViewById(R.id.droppanel);
        RelativeLayout  r2 =(RelativeLayout) rootView .findViewById(R.id.droppanel1);
        RelativeLayout  r3 =(RelativeLayout) rootView .findViewById(R.id.droppanel2);
-       GlobalClass globalvariable  = (GlobalClass)getActivity().getApplicationContext();
-    // defining global variables
-       name=globalvariable.getName();
-       monument_ID= globalvariable.getMonument_ID();			
+      */
+   // defining global variables
+        GlobalClass globalvariable  = (GlobalClass)getActivity().getApplicationContext();
+      name=globalvariable.getName();
+     monument_ID= globalvariable.getMonument_ID();			
        pid = globalvariable.getid();
        
         System.out.println(name);
         
         try
         {
+        	// 
         	String query_getposition = "Select pid from PointOfInterest where Brief = "+"'"+name+"'";
             Cursor c = db.rawQuery(query_getposition, null);
             if(c.moveToFirst())
@@ -91,19 +101,18 @@ public FindPeopleFragment(){}
         
       
         
-       rl. setOnClickListener(new View.OnClickListener(){
+      btn_story. setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
              
-            	   if(t1.getVisibility()==View.GONE)
+            	   if(txt_Story.getVisibility()==View.GONE)
                    {
-            		   t1.setVisibility(View.VISIBLE);
+            		   txt_Story.setVisibility(View.VISIBLE);
 
                    }
             	   else
             	   {
-            		     t1.setVisibility(View.GONE
-            				   );
+            		   txt_Story.setVisibility(View.GONE );
             	   }
 
             	
@@ -111,18 +120,18 @@ public FindPeopleFragment(){}
         });
        
        
-       r2. setOnClickListener(new View.OnClickListener(){
+       btn_arch. setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
             
-           	   if(t2.getVisibility()==View.GONE)
+           	   if(txt_arch.getVisibility()==View.GONE)
                   {
-           		   t2.setVisibility(View.VISIBLE);
+           		txt_arch.setVisibility(View.VISIBLE);
 
                   }
            	   else
            	   {
-           		     t2.setVisibility(View.GONE
+           		txt_arch.setVisibility(View.GONE
            				   );
            	   }
 
@@ -130,18 +139,18 @@ public FindPeopleFragment(){}
            }
        });
        
-       r3. setOnClickListener(new View.OnClickListener(){
+       btn_myth. setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
             
-           	   if(t4.getVisibility()==View.GONE)
+           	   if(txt_myth.getVisibility()==View.GONE)
                   {
-           		   t4.setVisibility(View.VISIBLE);
+           		txt_myth.setVisibility(View.VISIBLE);
 
                   }
            	   else
            	   {
-           		     t4.setVisibility(View.GONE
+           		txt_myth.setVisibility(View.GONE
            				   );
            	   }
 
@@ -152,7 +161,7 @@ public FindPeopleFragment(){}
        // Onclick Function  of  Play button
        
        
-       b1.setOnClickListener(new View.OnClickListener(){
+     btn_play.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
             
@@ -179,7 +188,7 @@ public FindPeopleFragment(){}
  // Onclick Function  of  Pause
        
        
-       b2.setOnClickListener(new View.OnClickListener(){
+       btn_pause.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
             
@@ -193,7 +202,7 @@ public FindPeopleFragment(){}
  // Onclick Function  of  Stop Button
        
        
-       b3.setOnClickListener(new View.OnClickListener(){
+       btn_stop.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
             
@@ -220,7 +229,7 @@ public FindPeopleFragment(){}
 	 public void  getname()
 	 {
 		  
-	       t.setText(name);
+	       txt_name.setText(name);
 	 }
 	 
 	 
@@ -232,40 +241,102 @@ public FindPeopleFragment(){}
 		
 		 
 		 String query =null;
-		
+		 String query2 = null;
 		 String temp=null;
 		//Setting text in Story
 		 
 		 query = "select descpt from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 1";
+		 query2 = "select descpName from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 1";
+		 c= db.rawQuery(query2, null);
+			
+		 if(c.moveToFirst())
+		 {
+			 temp = c.getString(c.getColumnIndex("descpName"));
+			 query2 = "select Type from Description_Type_Master where ID ="+temp;
+			 c= db.rawQuery(query2, null);
+			 if(c.moveToFirst())
+			 {
+				 temp = c.getString(c.getColumnIndex("Type"));
+				 btn_story.setText(temp);
+				 
+			 }
+			 
+		 }
+		 
+		 
 		 c= db.rawQuery(query, null);
 		
 		 if(c.moveToFirst())
 		 {
 			 temp = c.getString(c.getColumnIndex("Descpt"));
-			 t1.setText(temp);
+			 txt_Story.setText(temp);
 			 
 		 }
+		 
+		 
  ttsString=	ttsString+" "+temp.toString();
 		 System.out.println(temp);
 		
+		 
 		 //Setting text in Architecture
 		 query = "select descpt from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 2";
+		 query2 = "select descpName from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 2";
+		 
+
+		 c= db.rawQuery(query2, null);
+			
+		 if(c.moveToFirst())
+		 {
+			 temp = c.getString(c.getColumnIndex("descpName"));
+			 query2 = "select Type from Description_Type_Master where ID ="+temp;
+			 c= db.rawQuery(query2, null);
+			 if(c.moveToFirst())
+			 {
+				 temp = c.getString(c.getColumnIndex("Type"));
+				 btn_arch.setText(temp);
+				 
+			 }
+			 
+		 }
+
+		 
 		 c= db.rawQuery(query, null);
 		 if(c.moveToFirst())
 		 {
 			 temp = c.getString(c.getColumnIndex("Descpt"));
-			 t2.setText(temp);
+			txt_arch.setText(temp);
 			 
 		 }
+		 
+		 
 		 ttsString=	ttsString+" "+temp.toString();
 		 System.out.println(temp);
 		 //Setting text in Myth
 		 query = "select descpt from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 3";
+		
+ query2 = "select descpName from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 3";
+		 
+
+		 c= db.rawQuery(query2, null);
+			
+		 if(c.moveToFirst())
+		 {
+			 temp = c.getString(c.getColumnIndex("descpName"));
+			 query2 = "select Type from Description_Type_Master where ID ="+temp;
+			 c= db.rawQuery(query2, null);
+			 if(c.moveToFirst())
+			 {
+				 temp = c.getString(c.getColumnIndex("Type"));
+				 btn_myth.setText(temp);
+				 
+			 }
+			 
+		 }
 		 c= db.rawQuery(query, null);
 		 if(c.moveToFirst())
 		 {
 			 temp = c.getString(c.getColumnIndex("Descpt"));
-			 t4.setText(temp);
+			txt_myth.setText(temp);
 			 
 		 }
 		 ttsString=	ttsString+" "+temp.toString();
