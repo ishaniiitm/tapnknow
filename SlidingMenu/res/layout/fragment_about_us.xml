@@ -44,7 +44,7 @@
               android:paddingLeft="30dip"
               android:text="About Us"
                android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textSize="@dimen/heading_1"
               android:fontFamily="Arial" />
 
   		</LinearLayout>
@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
 android:layout_marginTop="5dp"
          >
 
@@ -67,17 +68,18 @@ android:layout_marginTop="5dp"
             android:text="ARI Innovation and Skills Pvt Ltd"
             android:layout_marginLeft="5dp"
           android:layout_marginRight="5dp"
+          android:layout_gravity="center_vertical"
+          android:textSize="@dimen/heading_2"
+          
             android:layout_weight="1"
-           
-            android:textSize="13dp"></TextView>
+          ></TextView>
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_minuments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/q" 
             android:layout_weight="1"
-            />
+            android:src="@drawable/ins" />
      
         </LinearLayout>
         
@@ -89,9 +91,10 @@ android:layout_marginTop="5dp"
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/heading_3"
           android:layout_marginLeft="5dp"
           android:layout_marginRight="5dp"
-            
+            android:gravity="left"
             android:text="ARI Innovation and Skills Pvt Ltd envisions an Authentic, Reliable, IT-enabled, Indigenous and Systematic information delivery to the masses.
 Tap N Know is a mobile based IT enabled platform which facilitates a user to access reliable information related to the monuments. It provides a holistic experience to a tourist by making best use of the available technological amenities.
 "></TextView>

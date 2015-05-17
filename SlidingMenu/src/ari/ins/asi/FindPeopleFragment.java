@@ -2,18 +2,26 @@ package ari.ins.asi;
 
 import java.util.Locale;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import ari.ins.asi.R;
 
 public class FindPeopleFragment extends Fragment {
@@ -28,7 +36,7 @@ public class FindPeopleFragment extends Fragment {
 public FindPeopleFragment(){}
 	
 	//Variable Declaration
-	TextView txt_name,txt_brief,txt_Story,txt_arch,txt_myth;
+	TextView txt_name,txt_brief,txt_Story,txt_arch,txt_myth,txt_lang;
 	TextToSpeech ttobj;
 	Button  btn_story,btn_arch,btn_myth, btn_play,btn_stop ,btn_pause;
 	SQLiteDatabase db;
@@ -39,6 +47,10 @@ public FindPeopleFragment(){}
 	String name=null;
 	String ttsString=null;
 	String  language;
+	 int resId;
+	
+	  ImageView    img_monuments;
+	  HeadsetReceiver  receiver;
 	
 	
 	@Override
@@ -48,7 +60,7 @@ public FindPeopleFragment(){}
         View rootView = inflater.inflate(R.layout.fragment_find_people, container, false);
         db  =getActivity().openOrCreateDatabase("Tapnknow", 1, null);
         
-        
+        receiver =new HeadsetReceiver();
         txt_name= (TextView) rootView.findViewById(R.id.txt_name);
         txt_brief =(TextView) rootView.findViewById(R.id.txt_Brief);
         txt_Story=(TextView) rootView.findViewById(R.id.txt_story);
@@ -62,6 +74,8 @@ public FindPeopleFragment(){}
        btn_play=(Button) rootView.findViewById(R.id.btn_play);
        btn_pause=(Button) rootView.findViewById(R.id.btn_pause);
        btn_stop =(Button) rootView.findViewById(R.id.btn_stop);
+       
+       img_monuments=(ImageView) rootView.findViewById(R.id.img_minuments);
         
      /*  RelativeLayout  rl =(RelativeLayout) rootView .findViewById(R.id.droppanel);
        RelativeLayout  r2 =(RelativeLayout) rootView .findViewById(R.id.droppanel1);
@@ -74,6 +88,7 @@ public FindPeopleFragment(){}
        pid = globalvariable.getid();
        
         System.out.println(name);
+      
         
         try
         {
@@ -92,12 +107,31 @@ public FindPeopleFragment(){}
    		 
          getname();
         getContent();
+        getimage();
  
         }catch(Exception  ex)
         {
-        	
+        	System.out.println(ex);
         }
+        // language  Selection  Events  
          
+        LayoutInflater inflator = LayoutInflater.from(getActivity().getBaseContext());
+		View v = inflator.inflate(R.layout.abslayout, null);
+		
+		txt_lang  =(TextView) v.findViewById(R.id.txt_language);
+		getActivity().getActionBar().setCustomView(v);
+		
+		
+		txt_lang .setOnClickListener(new View.OnClickListener() {
+            @Override
+public void onClick(View v) {
+            	
+            	SingleChoiceWithRadioButton();
+            
+            }
+            
+        });
+        
         
       
         
@@ -165,17 +199,37 @@ public FindPeopleFragment(){}
            @Override
            public void onClick(View v){
             
+        	   GlobalClass  globalvariable = (GlobalClass) getActivity().getApplicationContext();
+        	   
+        	   AudioManager am = (AudioManager)getActivity().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
+        		if(am.isWiredHeadsetOn()) {
+        			globalvariable.set_headset(1);
+        		} else{
+        			// handle headphones unplugged
+        			globalvariable.set_headset(0);
+        		}
+        	   
         	   ttobj=new TextToSpeech(getActivity().getApplicationContext(), 
          		      new TextToSpeech.OnInitListener() {
          		      @Override
          		      public void onInit(int status) {
          		         if(status != TextToSpeech.ERROR){
          		             ttobj.setLanguage(Locale.UK);
-         		             
-         		             GlobalClass  globalvariable = (GlobalClass) getActivity().getApplicationContext();
+         		             ttobj.setSpeechRate((float) 0.8);
+
+         		        	   GlobalClass  globalvariable = (GlobalClass) getActivity().getApplicationContext();
          		             
          		             language=globalvariable.getLanguage();
+         		             
+         		             if(globalvariable.get_headset()==1)
+         		             {
          		             speakText(language);
+         		             }
+         		             else
+         		             {
+         		            	 Toast.makeText(getActivity().getApplicationContext(), "Please Plug-in Headphone", 1).show();
+         		             }
          		             
          		            }				
          		         }
@@ -224,8 +278,29 @@ public FindPeopleFragment(){}
 	//Function For  Text To Speetch
 	
 
+	public void onBackPressed()
+	{
+		ttobj.shutdown();
+	}
 	
+	public void onDestroy() {
+        // Don't forget to shutdown!
+        if (ttobj != null) {
+            ttobj.stop();
+            ttobj.shutdown();
+        }
+        super.onDestroy();
+    }
 	
+	  public void onResume() {
+	        
+			 IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+			getActivity().registerReceiver(receiver, filter);
+			super.onResume();
+	        
+	        
+	     
+	    }
 	 public void  getname()
 	 {
 		  
@@ -236,6 +311,7 @@ public FindPeopleFragment(){}
 	 public void   getContent()
 	 {
 		 Cursor c;
+		 
 		 String firstName = null;
 		 System.out.println("pid under get content function"+pid);
 		
@@ -244,6 +320,7 @@ public FindPeopleFragment(){}
 		 String query2 = null;
 		 String temp=null;
 		//Setting text in Story
+		 
 		 
 		 query = "select descpt from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 1";
 		 query2 = "select descpName from POIDescpTable where ID="+monument_ID+" AND PID="+pid+" AND DescpTYpe= 1";
@@ -355,6 +432,69 @@ public FindPeopleFragment(){}
 		      ttobj.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 		      
 
+		   }
+		
+		
+		
+		
+		
+		//
+		
+		
+		
+		
+		// languge Selection Dialouge
+		
+		AlertDialog alert;	
+		 private void SingleChoiceWithRadioButton() {  
+			
+			 final CharSequence[] items = {"English"};
+				 
+				AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+				builder.setTitle("Pick a Language");
+				
+				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog, int item) {
+				    	   
+				        GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
+				        
+				      globalVariable.setLanguage(items[item].toString());
+				      
+				     
+		        		
+		        		alert.dismiss();
+				    	//Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+				    }
+				});
+				 alert = builder.create();
+				alert.show();
+			   }  
+		 
+		 public void   getimage()
+		   {
+			   Cursor cursor;
+			   
+			   byte[] image;
+				 
+				 String query ="Select Thumbnails from PointOfInterest where Brief = '"+name+"'" ;
+				 cursor= db.rawQuery(query,null);
+				 
+				 if (cursor != null ) {
+			            if  (cursor.moveToFirst()) {
+			                  do {
+		String  imagename= cursor.getString(cursor.getColumnIndex("Thumbnails")).toString();
+		int resId4 =getResources().getIdentifier(imagename, "drawable", "ari.ins.asi");
+		  
+		  img_monuments.setImageResource(resId4);
+		  
+		
+		
+
+			                
+			                  }while (cursor.moveToNext());
+			            }
+			       }
+			   
 		   }
 	  
 	 

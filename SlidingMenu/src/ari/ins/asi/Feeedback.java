@@ -13,8 +13,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class Feeedback extends Fragment {
 	
@@ -33,6 +36,7 @@ public class Feeedback extends Fragment {
 	Button  b;
 	
 EditText  txt_suggest, txt_name,  txt_email;
+TextView txt_lang;
 	
 	
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +59,26 @@ EditText  txt_suggest, txt_name,  txt_email;
 	            	
 	            	
 	        	}
+	            
+	        });
+	       
+	       
+	       // Languge Selection 
+	       
+	       LayoutInflater inflator = LayoutInflater.from(getActivity().getBaseContext());
+			View v = inflator.inflate(R.layout.abslayout, null);
+			
+			txt_lang  =(TextView) v.findViewById(R.id.txt_language);
+			getActivity().getActionBar().setCustomView(v);
+			
+			
+			txt_lang .setOnClickListener(new View.OnClickListener() {
+	            @Override
+	public void onClick(View v) {
+	            	
+	            	SingleChoiceWithRadioButton();
+	            
+	            }
 	            
 	        });
          
@@ -113,7 +137,31 @@ EditText  txt_suggest, txt_name,  txt_email;
        }
       
 	
-	 
+     AlertDialog alert;	
+	 private void SingleChoiceWithRadioButton() {  
+		
+		 final CharSequence[] items = {"English"};
+			 
+			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+			builder.setTitle("Pick a Language");
+			
+			builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int item) {
+			    	   
+			        GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
+			        
+			      globalVariable.setLanguage(items[item].toString());
+			      
+			  
+	        		
+	        		alert.dismiss();
+			    	//Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+			    }
+			});
+			 alert = builder.create();
+			alert.show();
+		   }  
+	
 	 
 	   
 	 

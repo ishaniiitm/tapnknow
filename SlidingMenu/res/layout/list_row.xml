@@ -27,10 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Rihanna Love the way lie"
-        android:textColor="#040404"
+        android:text="ARI Innovation Skills"
+        android:textColor="#FFFFFF"
         android:typeface="sans" 
-        android:textSize="15dip"
+        android:textSize="@dimen/heading_2"
         android:textStyle="bold"/>
     
 	<!-- Title Of Song-->

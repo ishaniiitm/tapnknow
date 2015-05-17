@@ -33,18 +33,20 @@
   				android:layout_height="wrap_content"
   				android:background="@drawable/gradiant"
   				android:layout_alignParentTop="true"
+  				android:gravity="center"
   				>
 
           <TextView
               android:id="@+id/textView1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:paddingTop="10dip"
-              android:paddingLeft="30dip"
+              android:paddingTop="5dip"
+              android:paddingBottom="5dip"
+				android:gravity="center"
               android:text="Name of the Monument"
                android:textColor="#FFFFFF"
-                android:textSize="15dp"
-              android:fontFamily="Arial" />
+               android:textSize="@dimen/heading_1"
+ />
 
   		</LinearLayout>
 
@@ -54,6 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
 
          >
 
@@ -68,14 +72,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name of POI"
-            android:textSize="13dp"></TextView>
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/heading_2"></TextView>
            
            <TextView
             android:id="@+id/txt_Brief"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name of POI"
-            android:textSize="13dp"></TextView>
+            android:layout_weight="0"
+            android:textSize="@dimen/heading_3"></TextView>
            
   </LinearLayout>
  
@@ -83,12 +90,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        
         android:layout_weight="1"
 		       >
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_minuments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
             android:src="@drawable/q" 
            />
      
@@ -109,6 +119,7 @@
                   android:id="@+id/btn_play"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:textSize="@dimen/heading_2"
                   android:text="Play" 
                   android:background="#2A7FFF"
                   android:textColor="#FFFFFF" 
@@ -119,6 +130,7 @@
                   android:id="@+id/btn_pause"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:textSize="@dimen/heading_2"
                   android:text="Pause" 
                 android:background="#2A7FFF"
                  android:textColor="#FFFFFF"
@@ -129,6 +141,7 @@
                   android:id="@+id/btn_stop"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:textSize="@dimen/heading_2"
                   android:text="Stop"
                   android:background="#2A7FFF"
                   android:textColor="#FFFFFF"
@@ -149,8 +162,10 @@
                <Button
                    android:id="@+id/btn_story"
                    android:layout_width="match_parent"     
-                   android:layout_height="wrap_content"
+                   android:layout_height="40dp"
                    android:text="Story"
+                   android:textColor="#FFFFFF"
+                   android:textSize="@dimen/heading_2"
                    android:background="@drawable/messageinbound_border_fuel"
                    android:layout_marginLeft="6dp"
                    android:layout_marginRight="6dp"
@@ -164,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name of POI"
-            android:textSize="13dp"
+            android:textSize="@dimen/heading_3"
             android:visibility="gone"
           ></TextView>"
                
@@ -172,8 +187,10 @@
       
                <Button
                    android:id="@+id/btn_arch"
-                   android:layout_width="fill_parent"
+                   android:layout_width="match_parent"
                    android:layout_height="40dp"
+                   android:textColor="#FFFFFF"
+                   android:textSize="@dimen/heading_2"
                    android:background="@drawable/messageinbound_border_fuel"
                    android:layout_marginLeft="6dp"
                    android:layout_marginRight="6dp"
@@ -186,14 +203,17 @@
             android:id="@+id/txt_arch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            
             android:text="Name of POI"
-            android:textSize="13dp"
+            android:textSize="@dimen/heading_3"
              android:visibility="gone"></TextView>
               
       <Button
           android:id="@+id/btn_myth"
-          android:layout_width="fill_parent"
+          android:layout_width="match_parent"
           android:layout_height="40dp"
+          android:textColor="#FFFFFF"
+          android:textSize="@dimen/heading_2"
           android:layout_marginLeft="6dp"
           android:layout_marginRight="6dp"
           android:background="@drawable/messageinbound_border_fuel"
@@ -206,7 +226,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name of POI"
-            android:textSize="13dp"
+            android:textSize="@dimen/heading_3"
               android:visibility="gone"></TextView>     
               </LinearLayout>
 
@@ -218,54 +238,8 @@
   			
   				
   				>
-                  <TextView
-            android:id="@+id/txt_myth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other Point of Interest in this monument "
-            android:layout_marginLeft="20dp"
-           
-            android:textSize="13dp"
-             ></TextView>
                 
                       </LinearLayout>
-              
-                 <LinearLayout android:id="@+id/footer"
-  				android:layout_width="fill_parent"
-  				android:layout_height="120dp"
-  				android:layout_alignParentTop="true"
-  				
-  				
-  				>
-
-                     <ImageView
-                         android:id="@+id/img_Asi"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:src="@drawable/previous" 
-                         android:paddingTop="40dp"/>
-
-                     <ImageView
-                         android:id="@+id/imageView3"
-                         android:layout_width="100dp"
-                         android:layout_height="wrap_content"
-                         android:src="@drawable/d2"
-                          />
-
-                     <ImageView
-                         android:id="@+id/imageView4"
-                         android:layout_width="100dp"
-                         android:layout_height="wrap_content"
-                         android:src="@drawable/d4" />
-                     
-                      <ImageView
-                         android:id="@+id/imageView4"
-                         android:layout_width="100dp"
-                         android:layout_height="wrap_content"
-                         android:src="@drawable/next" 
-                         android:paddingTop="40dp" android:layout_gravity="right"></ImageView>"
-              
-              </LinearLayout>
               
               
           

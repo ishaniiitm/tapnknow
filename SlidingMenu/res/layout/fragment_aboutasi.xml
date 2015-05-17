@@ -42,7 +42,7 @@
               android:paddingLeft="30dip"
               android:text="About ASI"
                android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textSize="@dimen/heading_1"
               android:fontFamily="Arial" />
 
   		</LinearLayout>
@@ -65,14 +65,15 @@
             android:text="Archaeological Survey Of India"
            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:textSize="13dp"
+            android:textSize="@dimen/heading_2"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"></TextView>
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_minuments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/q"
+            android:src="@drawable/asi"
             android:layout_marginLeft="50dp"
             android:layout_weight="1" />
      
@@ -86,6 +87,7 @@
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/heading_3"
             android:text="The  Archaeological Survey of India (ASI), under the Ministry of Culture, is the premier organization for the archaeological researches and protection of the cultural heritage of the nation. Maintenance of ancient monuments and archaeological sites and remains of national importance is the prime concern of the ASI. 
 Besides it regulate all archaeological activities in the country as per the provisions of the Ancient Monuments and Archaeological Sites and Remains Act, 1958. It also regulates Antiquities and Art Treasure Act, 1972
             "

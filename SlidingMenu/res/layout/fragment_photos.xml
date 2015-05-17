@@ -33,16 +33,16 @@
             android:layout_height="wrap_content"
             android:text="Brief about the Monument"
            
-            android:textSize="13dp"
+            android:textSize="@dimen/heading_2"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"></TextView>
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_minuments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/q"
-            android:layout_marginLeft="80dp"
+           
             android:layout_weight="1"></ImageView>
         
         
@@ -90,7 +90,7 @@
               android:paddingLeft="30dip"
               android:text="Point Of Interest"
                android:textColor="#FFFFFF"
-                android:textSize="15dp"
+                android:textSize="@dimen/heading_2"
               android:fontFamily="Arial" />
 
           </LinearLayout>
