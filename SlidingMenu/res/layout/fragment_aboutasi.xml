@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+  
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:fillViewport="true">
+
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="#ffffff" >
+
+      <!-- Header  Starts -->
+
+      
+      <!-- Header Ends -->
+      <!-- Footer Start -->
+      <!-- Footer Ends -->
+
+
+      <!-- Login Form -->
+      
+      <LinearLayout  android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+      
+      
+        <LinearLayout android:id="@+id/footer"
+  				android:layout_width="fill_parent"
+  				android:layout_height="40dip"
+  				android:background="@drawable/gradiant"
+  				android:layout_alignParentTop="true"
+  				>
+
+          <TextView
+              android:id="@+id/textView1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="10dip"
+              android:paddingLeft="30dip"
+              android:text="About ASI"
+               android:textColor="#FFFFFF"
+                android:textSize="@dimen/heading_1"
+       />
+
+  		</LinearLayout>
+
+     
+
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+		android:layout_marginTop="5dp"
+         >
+
+     
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Archaeological Survey Of India"
+           android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/heading_2"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"></TextView>
+
+        <ImageView
+            android:id="@+id/img_minuments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/asi"
+            android:layout_marginLeft="50dp"
+            android:layout_weight="1" />
+     
+        </LinearLayout>
+        
+   <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent" 
+          android:layout_marginTop="5dp">
+          <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/heading_3"
+            android:text="The  Archaeological Survey of India (ASI), under the Ministry of Culture, is the premier organization for the archaeological researches and protection of the cultural heritage of the nation. Maintenance of ancient monuments and archaeological sites and remains of national importance is the prime concern of the ASI. 
+Besides it regulate all archaeological activities in the country as per the provisions of the Ancient Monuments and Archaeological Sites and Remains Act, 1958. It also regulates Antiquities and Art Treasure Act, 1972
+            "
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"></TextView>
+      </LinearLayout>
+          
+        </LinearLayout>
+          
+          
+          <!-- Login button -->
+          <!-- Link to Registration Screen -->
+        
+      <!-- Login Form Ends -->
+
+    
+  </RelativeLayout>
+  
+  
+		</ScrollView>
+  		
+ 
+

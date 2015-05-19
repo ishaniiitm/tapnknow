@@ -3,6 +3,7 @@ package ari.ins.asi;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -18,7 +19,7 @@ public class ImageAdapter extends BaseAdapter { private Context mContext;
 ArrayList<PointofInterestClass> list = new ArrayList<PointofInterestClass>();
 
 // Constructor
-public ImageAdapter(Context c, ArrayList<PointofInterestClass> employeeList) {
+public ImageAdapter(Context c, int resourceId, List<PointofInterestClass> employeeList) {
 	mContext = c;
 	this.list = list ;
 }

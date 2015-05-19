@@ -13,9 +13,11 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -35,9 +37,11 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
 import android.widget.ListView;
@@ -45,7 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ari.ins.asi.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity  {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -67,6 +71,9 @@ GlobalClass globalVariable;
 	private NavDrawerListAdapter adapter;
 	Fragment fragment;
 	
+	TextView  txt_lang ;
+	HeadsetReceiver  receiver;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +84,31 @@ GlobalClass globalVariable;
 		
 		
 		
+		
+ receiver =new HeadsetReceiver();
+		//  add  listner
+		
+		
+		LayoutInflater inflator = LayoutInflater.from(this);
+		View v = inflator.inflate(R.layout.abslayout, null);
+		
+		txt_lang  =(TextView) v.findViewById(R.id.txt_language);
+		getActionBar().setCustomView(v);
+
+txt_lang.setOnClickListener(new OnClickListener() {
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		SingleChoiceWithRadioButton();
+		
+	}
+});
+	
+		
 		fragment  =new HomeFragment();
+		
+	//txt_lang=	(TextView) getActionBar().getCustomView().findViewById(R.id.textView1);
 		
 	getActionBar().setBackgroundDrawable(new  ColorDrawable(Color.parseColor("#0A81F7")));
 		//getActionBar().setBackgroundDrawable(new  ColorDrawable(Color.parseColor(R.layout.header_gradient)));
@@ -109,12 +140,12 @@ GlobalClass globalVariable;
 
 		if (nfcAdapter != null && nfcAdapter.isEnabled()) {
 			
-			Toast.makeText(this, "NFc is available", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "NFc is available", Toast.LENGTH_LONG).show();
 			Intent intent = getIntent();
 			parseIntent(getIntent());
 
 		} else {
-			Toast.makeText(this, "NFc is not available", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "NFc is not available", Toast.LENGTH_LONG).show();
 			
 		}
 	}
@@ -148,7 +179,7 @@ GlobalClass globalVariable;
 				// adding nav drawer items to array
 				// Home
 				int i = 0;
-				for(i=0;i<10;i++)
+				for(i=0;i<4;i++)
 				{
 				navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
 				}
@@ -212,11 +243,14 @@ GlobalClass globalVariable;
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// toggle nav drawer on selecting action bar app icon/title
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			System.out.println("one two thereree");
 			return true;
 		}
+		
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_lang:
+		case R.id.txt_language:
+			SingleChoiceWithRadioButton();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -246,16 +280,17 @@ GlobalClass globalVariable;
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			//fragment = new FindPeopleFragment();
+			fragment = new AboutUs();
 			break;
 		case 2:
-			//fragment = new PhotosFragment();
+			fragment = new  AboutAsi();
 			break;
 		case 3:
 			//fragment = new CommunityFragment();
+			fragment = new Feeedback();
 			break;
 		case 4:
-			//fragment = new PagesFragment();
+			fragment = new Feeedback();
 			break;
 		case 5:
 			//fragment = new WhatsHotFragment();
@@ -337,7 +372,11 @@ GlobalClass globalVariable;
 	
 	@Override
     protected void onResume() {
-        super.onResume();
+        
+		 IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+		registerReceiver(receiver, filter);
+		super.onResume();
+        
         
         enableForegroundDispatchSystem();
     }
@@ -470,4 +509,22 @@ GlobalClass globalVariable;
 	        String code =new String(payload); 
 	        return code;
 	    }
+	    
+	    
+	    private void SingleChoiceWithRadioButton() {  
+			final CharSequence[] items = {"English", "Hindi"};
+			 
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Pick a color");
+			builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int item) {
+			        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+			    }
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+		   }  
+
+
+		
 }

@@ -8,7 +8,11 @@ public class GlobalClass  extends Application {
 	private   int  id;
 	private   int  monument_ID;
 	
+	private int chk_headset;
+	
 	 public String  name;
+	 
+	 
 
 	public String language ="en";
     
@@ -35,7 +39,18 @@ public class GlobalClass  extends Application {
         return language;
     }
      
+    public   Integer  get_headset()
     
+    {
+    	return  chk_headset;
+    	
+    	
+    }
+    
+    public  void   set_headset( int headsetvalue)
+    {
+    	chk_headset=headsetvalue;
+    }
     
     
  public void setMonument_ID(int  cid) {
