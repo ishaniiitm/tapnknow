@@ -35,6 +35,7 @@ import android.nfc.NfcAdapter;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -69,6 +70,9 @@ GlobalClass globalVariable;
 	// navigation drawer items
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
+	private ProgressDialog prgDialog;
+// Progress Dialog type (0 - for Horizontal progress bar)
+public static final int progress_bar_type = 1;
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
@@ -82,7 +86,7 @@ GlobalClass globalVariable;
 	
 	  private ProgressDialog pDialog;
       // Progress Dialog type (0 - for Horizontal progress bar)
-      public static final int progress_bar_type = 0;
+ 
 	
 
 	@Override
@@ -94,7 +98,7 @@ GlobalClass globalVariable;
 		
 				//copying sqlite database on Android device
 		
-		new Databasetransfer().execute();
+		 new Databasetransfer().execute("test");
 		
 		
 		
@@ -373,9 +377,14 @@ txt_lang.setOnClickListener(new OnClickListener() {
     @Override
     protected void onPause() {
         super.onPause();
-
+try{
         disableForegroundDispatchSystem();
-    }
+}
+catch(Exception ex)
+{
+	System.out.println(ex);
+	}
+}
 	//  NFc  Tag reading 
 	
 	@Override
@@ -546,40 +555,87 @@ txt_lang.setOnClickListener(new OnClickListener() {
 			}
 		}
 	   
-public class  Databasetransfer extends AsyncTask<Void, Void, Void>
-{
+ // Show Dialog Box with Progress bar
+        @Override
+        protected Dialog onCreateDialog(int id) {
+            switch (id) {
+            case progress_bar_type:
+                prgDialog = new ProgressDialog(this);
+                prgDialog.setMessage("Please Wait App configuaration is  ongoing");
+                prgDialog.setIndeterminate(false);
+                prgDialog.setMax(100);
+                prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                prgDialog.setCancelable(false);
+                prgDialog.show();
+                return prgDialog;
+            default:
+                return null;
+            }
+        }
+	    
+	    class Databasetransfer extends AsyncTask<String, String, String> {
+	    	 
+            // Show Progress bar before downloading Music
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                // Shows Progress Bar Dialog and then call doInBackground method
+                showDialog(progress_bar_type);
+                
+               
 
-	  @Override
-      protected void onPreExecute() {
-          super.onPreExecute();
-          // Shows Progress Bar Dialog and then call doInBackground method
-          pDialog = new ProgressDialog(MainActivity.this);
-          pDialog.setMessage("Please wait...");
-          pDialog.setCancelable(false);
-          pDialog.show();
-
-      }
-
-	
-	 protected void onPostExecute(Void result) {
-         super.onPostExecute(result);
-         // Dismiss the progress dialog
-         if (pDialog.isShowing())
-             pDialog.dismiss();
-       
-     
-        
-     }
-	@Override
-	protected Void doInBackground(Void... params) {
-		// TODO Auto-generated method stub
-		
-		copyDatabase();
-		return null;
-		
-	}
-
-
-		
-}
+            
+            }
+ 
+            // Download Music File from Internet
+            @Override
+            protected String doInBackground(String... f_url) {
+                int count;
+               
+                return null;
+            }
+ 
+            // While Downloading Music File
+            protected void onProgressUpdate(String... progress) {
+                // Set progress percentage
+            	
+                prgDialog.setProgress(Integer.parseInt(progress[0]));
+            }
+ 
+            
+         
+            @Override
+            protected void onPostExecute(String file_url) {
+               
+            	
+            	
+          	  Handler handler = new Handler();
+               
+                
+                SQLiteDatabase  db =getApplicationContext().openOrCreateDatabase("Tapnknow",1, null);
+                
+                String query ="select *from MonumentTable";
+                 try
+                 {
+                Cursor cursor=db.rawQuery(query,null);
+                dismissDialog(progress_bar_type);
+                 }
+                 catch(Exception  ex)
+                 {
+                	 copyDatabase();
+                	 handler.postDelayed(new Runnable() {
+                         public void run() {
+                         	 dismissDialog(progress_bar_type);
+                         }}, 4000);
+                
+                 }
+                
+                
+            	               
+               // Toast.makeText(getApplicationContext(), "Intial Settings completed", Toast.LENGTH_LONG).show();
+               
+               
+            }
+        }
+ 
 }
