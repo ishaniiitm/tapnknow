@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -31,6 +33,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -56,7 +59,7 @@ public class MainActivity extends Activity  {
 	NfcAdapter nfcAdapter;
 	    public static final String MIME_TYPE = "application/ins";
 GlobalClass globalVariable;
-	
+
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 
@@ -73,14 +76,25 @@ GlobalClass globalVariable;
 	
 	TextView  txt_lang ;
 	HeadsetReceiver  receiver;
+	  //Copying database to device
+
+
+	
+	  private ProgressDialog pDialog;
+      // Progress Dialog type (0 - for Horizontal progress bar)
+      public static final int progress_bar_type = 0;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		copyDatabase();
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_main);
 		
-		copyDatabase();		//copying sqlite database on Android device
+				//copying sqlite database on Android device
+		
+		new Databasetransfer().execute();
 		
 		
 		
@@ -343,32 +357,7 @@ txt_lang.setOnClickListener(new OnClickListener() {
 	
 	
 
-	  //Copying database to device
-	private void copyDatabase()
-	{
-		InputStream myInput;
-		try {
-			myInput = this.getAssets().open("Tapnknow");
-	
-	        // Path to the just created empty db
-	        String outFileName =  getDatabasePath("Tapnknow").toString() ;
-	        // Open the empty db as the output stream
-	        OutputStream myOutput = new FileOutputStream(outFileName);
-	        // transfer bytes from the inputfile to the outputfile
-	        byte[] buffer = new byte[1024];
-	        int length;
-	        while ((length = myInput.read(buffer)) > 0) {
-	            myOutput.write(buffer, 0, length);
-	        }
-	        myOutput.flush();
-	        myOutput.close();
-	        myInput.close();
-	        
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	
 	@Override
     protected void onResume() {
@@ -450,7 +439,8 @@ txt_lang.setOnClickListener(new OnClickListener() {
    		}
    		catch(Exception ex){
    			
-   			System.out.println(ex);       		};
+   			System.out.println(ex);       		
+   			};
    		
    		
    		 
@@ -510,6 +500,7 @@ txt_lang.setOnClickListener(new OnClickListener() {
 	        return code;
 	    }
 	    
+	   
 	    
 	    private void SingleChoiceWithRadioButton() {  
 			final CharSequence[] items = {"English", "Hindi"};
@@ -524,7 +515,71 @@ txt_lang.setOnClickListener(new OnClickListener() {
 			AlertDialog alert = builder.create();
 			alert.show();
 		   }  
+	    
+	    
+	   
+	    
+	    
+		private void copyDatabase()
+		{
+			InputStream myInput;
+			try {
+				myInput = this.getAssets().open("Tapnknow");
+		
+		        // Path to the just created empty db
+		        String outFileName =  getDatabasePath("Tapnknow").toString() ;
+		        // Open the empty db as the output stream
+		        OutputStream myOutput = new FileOutputStream(outFileName);
+		        // transfer bytes from the inputfile to the outputfile
+		        byte[] buffer = new byte[1024];
+		        int length;
+		        while ((length = myInput.read(buffer)) > 0) {
+		            myOutput.write(buffer, 0, length);
+		        }
+		        myOutput.flush();
+		        myOutput.close();
+		        myInput.close();
+		        
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	   
+public class  Databasetransfer extends AsyncTask<Void, Void, Void>
+{
+
+	  @Override
+      protected void onPreExecute() {
+          super.onPreExecute();
+          // Shows Progress Bar Dialog and then call doInBackground method
+          pDialog = new ProgressDialog(MainActivity.this);
+          pDialog.setMessage("Please wait...");
+          pDialog.setCancelable(false);
+          pDialog.show();
+
+      }
+
+	
+	 protected void onPostExecute(Void result) {
+         super.onPostExecute(result);
+         // Dismiss the progress dialog
+         if (pDialog.isShowing())
+             pDialog.dismiss();
+       
+     
+        
+     }
+	@Override
+	protected Void doInBackground(Void... params) {
+		// TODO Auto-generated method stub
+		
+		copyDatabase();
+		return null;
+		
+	}
 
 
 		
+}
 }
